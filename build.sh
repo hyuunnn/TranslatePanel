@@ -2,6 +2,7 @@
 set -euo pipefail
 
 APP_NAME="PreviewClaude"
+swift build -c release
 BUILD_DIR=$(swift build -c release --show-bin-path 2>&1 | tail -1)
 APP_DIR="build/$APP_NAME.app"
 
