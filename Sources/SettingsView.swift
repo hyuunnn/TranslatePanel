@@ -91,8 +91,8 @@ struct SettingsView: View {
                     .font(.headline)
                 VStack(alignment: .leading, spacing: 4) {
                     Label("⌘⇧\\ \(L("menu.toggle"))", systemImage: "macwindow")
-                    Label("⌘⇧T \(L("settings.selectTranslate"))", systemImage: "character.book.closed")
-                    Label("⌘⇧L \(L("settings.captureTranslate"))", systemImage: "camera.viewfinder")
+                    Label("⌘⇧, \(L("settings.selectTranslate"))", systemImage: "character.book.closed")
+                    Label("⌘⇧. \(L("settings.captureTranslate"))", systemImage: "camera.viewfinder")
                 }
                 .font(.callout)
                 .foregroundColor(.secondary)

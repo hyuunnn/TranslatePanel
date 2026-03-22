@@ -33,10 +33,10 @@ class HotkeyManager {
 
         // ⌘⇧\ — toggle panel
         registerKey(keyCode: UInt32(kVK_ANSI_Backslash), modifiers: UInt32(cmdKey | shiftKey), id: 1)
-        // ⌘⇧T — translate selection
-        registerKey(keyCode: UInt32(kVK_ANSI_T), modifiers: UInt32(cmdKey | shiftKey), id: 2)
-        // ⌘⇧L — capture + OCR + translate
-        registerKey(keyCode: UInt32(kVK_ANSI_L), modifiers: UInt32(cmdKey | shiftKey), id: 3)
+        // ⌘⇧, — translate selection
+        registerKey(keyCode: UInt32(kVK_ANSI_Comma), modifiers: UInt32(cmdKey | shiftKey), id: 2)
+        // ⌘⇧. — capture + OCR + translate
+        registerKey(keyCode: UInt32(kVK_ANSI_Period), modifiers: UInt32(cmdKey | shiftKey), id: 3)
     }
 
     func unregister() {

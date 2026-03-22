@@ -55,8 +55,8 @@ struct ChatView: View {
             quickActionButton(L("action.explain"), action: .explain)
             Spacer()
             VStack(alignment: .trailing, spacing: 2) {
-                Text("⌘⇧T \(L("settings.selectTranslate"))")
-                Text("⌘⇧L \(L("settings.captureTranslate"))")
+                Text("⌘⇧, \(L("settings.selectTranslate"))")
+                Text("⌘⇧. \(L("settings.captureTranslate"))")
             }
             .font(.caption2)
             .foregroundColor(.secondary)

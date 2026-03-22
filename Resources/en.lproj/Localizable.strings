@@ -5,7 +5,7 @@
 "action.translate" = "Translate";
 "action.summarize" = "Summarize";
 "action.explain" = "Explain";
-"empty.guide" = "Drag text in Preview, then press\n⌘⇧T to translate instantly\nor type a question below";
+"empty.guide" = "Drag text in Preview, then press\n⌘⇧, to translate instantly\nor type a question below";
 "input.placeholder" = "Type a message...";
 "input.paste" = "Paste from clipboard";
 "input.noClipboard" = "No text in clipboard. Copy text first.";
@@ -15,7 +15,7 @@
 "settings.accessibility" = "Accessibility";
 "settings.screenCapture" = "Screen Capture";
 "settings.requestAccess" = "Request Access";
-"settings.permDesc" = "Accessibility: ⌘⇧T Select Translate / Screen Capture: ⌘⇧L Capture Translate\nScreen capture requires app restart after granting permission";
+"settings.permDesc" = "Accessibility: ⌘⇧, Select Translate / Screen Capture: ⌘⇧. Capture Translate\nScreen capture requires app restart after granting permission";
 "settings.chatModel" = "Chat Model";
 "settings.defaultModel" = "Default (CLI setting)";
 "settings.fastModel" = "Quick Action Model (Translate/Summarize/Explain)";
