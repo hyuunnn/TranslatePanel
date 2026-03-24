@@ -149,13 +149,19 @@ struct ChatView: View {
                     }
             }
 
-            Button(action: { viewModel.sendMessage() }) {
-                Image(systemName: "arrow.up.circle.fill")
+            Button(action: {
+                if viewModel.isLoading {
+                    viewModel.cancelCurrentRequest()
+                } else {
+                    viewModel.sendMessage()
+                }
+            }) {
+                Image(systemName: viewModel.isLoading ? "stop.circle.fill" : "arrow.up.circle.fill")
                     .font(.title2)
-                    .foregroundColor(viewModel.canSend ? .accentColor : .secondary)
+                    .foregroundColor(viewModel.isLoading ? .red : (viewModel.canSend ? .accentColor : .secondary))
             }
             .buttonStyle(.borderless)
-            .disabled(!viewModel.canSend)
+            .disabled(!viewModel.isLoading && !viewModel.canSend)
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 8)

@@ -19,6 +19,7 @@ class ChatViewModel: ObservableObject {
     @Published var updateCounter = 0
 
     private var currentProcess: Process?
+    private var isCancelled = false
     private var observer: Any?
     private var ocrErrorObserver: Any?
 
@@ -116,12 +117,14 @@ class ChatViewModel: ObservableObject {
         messages.append(ChatMessage(role: .user, content: userContent))
         inputText = ""
         isLoading = true
+        isCancelled = false
         errorMessage = nil
         messages.append(ChatMessage(role: .assistant, content: ""))
         return messages.count - 1
     }
 
-    private func cancelCurrentRequest() {
+    func cancelCurrentRequest() {
+        isCancelled = true
         currentProcess?.terminate()
         currentProcess = nil
         isLoading = false
@@ -138,6 +141,7 @@ class ChatViewModel: ObservableObject {
 
     private func runClaude(prompt: String, responseIndex idx: Int, fast: Bool = false) {
         cancelCurrentRequest()
+        isLoading = true
 
         let process = Process()
         process.executableURL = URL(fileURLWithPath: Self.shellSetup.path)
@@ -175,6 +179,7 @@ class ChatViewModel: ObservableObject {
                 self.isLoading = false
                 self.currentProcess = nil
                 if proc.terminationStatus != 0,
+                   !self.isCancelled,
                    self.messages.indices.contains(idx),
                    self.messages[idx].content.isEmpty {
                     let errData = errorPipe.fileHandleForReading.readDataToEndOfFile()
