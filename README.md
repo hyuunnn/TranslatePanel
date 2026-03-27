@@ -14,11 +14,9 @@ Vibe coded with **Claude Opus 4.6** via [Claude Code](https://github.com/anthrop
 |:---:|:---:|
 | ![Capture Translate](images/01.png) | ![Select Translate](images/02.png) |
 
-<img src="images/04.png" width="500">
-
-### Settings
-
-<img src="images/03.png" width="500">
+| Image Drop Translate | Settings |
+|:---:|:---:|
+| ![Image Drop Translate](images/04.png) | ![Settings](images/03.png) |
 
 ## Features
 
