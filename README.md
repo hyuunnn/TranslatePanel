@@ -4,6 +4,8 @@ A Claude translation panel designed to use on top of macOS Preview app.
 
 Uses [`claude -p`](https://code.claude.com/docs/ko/cli-reference) CLI, so no separate API key is needed — it uses your existing Claude authentication.
 
+OCR-extracted text often contains broken line breaks, missing characters, or garbled words, which degrades translation quality when using conventional translators. By using an LLM, the app understands context and delivers natural translations.
+
 Vibe coded with **Claude Opus 4.6** via [Claude Code](https://github.com/anthropics/claude-code).
 
 [한국어](README_ko.md)
