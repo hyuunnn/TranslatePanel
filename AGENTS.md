@@ -20,17 +20,15 @@ No test suite — validate by building and running manually.
 
 ## Boundaries
 
-### Always
 - Run `swift build -c release` after any code change before marking work done
 - Update **both** `Resources/en.lproj/Localizable.strings` and `Resources/ko.lproj/Localizable.strings` when adding/changing localization keys
-- Verify CLI flags from `--help` output first — if `--help` is incomplete (e.g. missing env vars, config files, system prompt), check official documentation
-
-### Never
-- Guess or infer CLI flags — always verify from actual help output
-- Write code for a new LLM provider before testing the CLI commands manually
+- Verify CLI flags from **both** `--help` output AND official documentation — never rely on `--help` alone, never guess or infer flags
+- Never write code for a new LLM provider before testing the CLI commands manually
 
 ### Known failure mode — DO NOT REPEAT
-> Agent skipped docs for `claude` CLI → missed `--system-prompt` (docs-only, not in `--help`) → broken implementation, had to redo. When `--help` is incomplete, check official docs.
+> **Pattern**: Agent sees `--help` has no system prompt flag → concludes "not supported" → implements workaround (prepend to prompt) → turns out official docs document a dedicated mechanism (flag, env var, config).
+> **Occurred with**: `claude` CLI (`--system-prompt` not in `--help`), `gemini` CLI (system prompt docs at geminicli.com, not in `--help`).
+> **Fix**: Official docs check is MANDATORY, not conditional. Never conclude a feature is unsupported based on `--help` alone.
 
 ## Adding a New LLM Provider
 
@@ -40,8 +38,7 @@ Supported providers are defined in `Sources/LLMProvider.swift` → `LLMProviderR
 
 1. **Research** (complete ALL sub-items before proceeding to Test):
    - [ ] Run `which <cli>` and `<cli> --help`
-   - [ ] If `--help` is incomplete, check official documentation for: env vars, config files, system prompt flags, session management
-     - For large pages (GitHub README, 400KB+), use `curl -sL <raw-url> | grep -iC15 "<keyword>"` instead of WebFetch to avoid context bloat
+   - [ ] Check official documentation (website, GitHub README) for: env vars, config files, system prompt flags, session management — this is mandatory, not conditional
    - [ ] Report findings to user: non-interactive mode, model flag, system prompt mechanism, session persistence opt-out
 2. **Test** — Execute actual commands to verify stdin input, stdout output, model flag, and system prompt delivery all work correctly.
 3. **Implement** — Create a struct conforming to `LLMProvider` in `Sources/LLMProvider.swift`:
@@ -50,7 +47,7 @@ Supported providers are defined in `Sources/LLMProvider.swift` → `LLMProviderR
    - Implement `formatPrompt()` — return prompt as-is if system prompt is handled elsewhere (CLI flag, env var, etc.); prepend to prompt if not
    - If the CLI requires env vars (e.g. system prompt via env var), extend the `LLMProvider` protocol or `ChatViewModel.runLLM()` as needed
    - Register the new provider in `LLMProviderRegistry.all`
-4. **Localization** — Add `settings.modelPlaceholder.<id>` key to **both** `.strings` files
+4. **Localization** — Add `settings.modelPlaceholder.<id>` key to both `.strings` files
 5. **Documentation** — Update the "Currently supported" list above
 6. **Verify** — `swift build -c release`
 
