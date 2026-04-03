@@ -31,15 +31,14 @@ No test suite — validate by building and running manually.
 
 ## Adding a New LLM Provider
 
-Currently supported:
-- **Claude** — `claude -p --no-session-persistence --model <name> --system-prompt <text>`
-- **Codex** — `codex exec --skip-git-repo-check --ephemeral -m <name>` (system prompt prepended to prompt)
+Supported providers are defined in `Sources/LLMProvider.swift` → `LLMProviderRegistry.all`.
 
 ### Steps
 
 1. **Research** (complete ALL sub-items before proceeding to Test):
    - [ ] Run `which <cli>` and `<cli> --help`
-   - [ ] **MANDATORY**: WebFetch the official documentation website (e.g. `<cli-name>cli.com/docs`, GitHub README). `--help` output is incomplete — always check docs for: env vars, config files, system prompt flags, session management. **Do not skip this step.**
+   - [ ] **MANDATORY**: Check official documentation for: env vars, config files, system prompt flags, session management. `--help` output is incomplete — **do not skip this step.**
+     - For large pages (GitHub README, 400KB+), use `curl -sL <raw-url> | grep -iA10 "<keyword>"` instead of WebFetch to avoid context bloat
    - [ ] Report findings to user: non-interactive mode, model flag, system prompt mechanism, session persistence opt-out
 2. **Test** — Execute actual commands to verify stdin input, stdout output, model flag, and system prompt delivery all work correctly.
 3. **Implement** — Create a struct conforming to `LLMProvider` in `Sources/LLMProvider.swift`:
