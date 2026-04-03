@@ -21,6 +21,7 @@
 "settings.model" = "모델";
 "settings.modelPlaceholder.claude" = "예: sonnet, haiku, opus";
 "settings.modelPlaceholder.codex" = "예: gpt-4.1-mini, o4-mini, o3";
+"settings.modelPlaceholder.gemini" = "예: gemini-2.5-flash, gemini-2.5-pro";
 "settings.modelDesc" = "CLI에 전달할 모델명을 입력하세요";
 "settings.systemPrompt" = "시스템 프롬프트 (선택)";
 "settings.hotkeys" = "단축키";

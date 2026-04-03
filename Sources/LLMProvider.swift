@@ -21,7 +21,6 @@ struct ClaudeProvider: LLMProvider {
     let avatarColor = Color.orange
     let defaultModel = "sonnet"
     let binaryName = "claude"
-
     func buildArguments(model: String, systemPrompt: String) -> [String] {
         var args = ["-p", "--no-session-persistence"]
         if !model.isEmpty { args += ["--model", model] }
@@ -58,10 +57,32 @@ struct CodexProvider: LLMProvider {
     }
 }
 
+// MARK: - Gemini
+
+struct GeminiProvider: LLMProvider {
+    let id = "gemini"
+    let displayName = "Gemini"
+    let avatarLetter = "G"
+    let avatarColor = Color.blue
+    let defaultModel = "gemini-2.5-flash"
+    let binaryName = "gemini"
+
+    func buildArguments(model: String, systemPrompt: String) -> [String] {
+        let sp = systemPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        var args = ["-p", sp]
+        if !model.isEmpty { args += ["-m", model] }
+        return args
+    }
+
+    func formatPrompt(_ prompt: String, systemPrompt: String) -> String {
+        prompt
+    }
+}
+
 // MARK: - Registry
 
 enum LLMProviderRegistry {
-    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider()]
+    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider(), GeminiProvider()]
 
     static func provider(forId id: String) -> LLMProvider {
         all.first { $0.id == id } ?? all[0]
