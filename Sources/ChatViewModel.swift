@@ -150,16 +150,15 @@ class ChatViewModel: ObservableObject {
     // MARK: - Image Drop OCR
 
     func handleDroppedImage(_ url: URL) {
-        guard let nsImage = NSImage(contentsOf: url),
-              let cgImage = nsImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
-            errorMessage = L("error.invalidImage")
-            return
-        }
-        ocrAndTranslate(cgImage)
+        handleDroppedNSImage(NSImage(contentsOf: url))
     }
 
     func handleDroppedImageData(_ data: Data) {
-        guard let nsImage = NSImage(data: data),
+        handleDroppedNSImage(NSImage(data: data))
+    }
+
+    private func handleDroppedNSImage(_ nsImage: NSImage?) {
+        guard let nsImage,
               let cgImage = nsImage.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
             errorMessage = L("error.invalidImage")
             return
@@ -172,18 +171,9 @@ class ChatViewModel: ObservableObject {
         errorMessage = nil
 
         Task.detached {
-            let request = VNRecognizeTextRequest()
-            request.recognitionLevel = .accurate
-            request.recognitionLanguages = ["en", "ko", "ja", "zh-Hans", "zh-Hant"]
-            request.usesLanguageCorrection = true
-
-            let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
             let text: String
             do {
-                try handler.perform([request])
-                text = request.results?
-                    .compactMap { $0.topCandidates(1).first?.string }
-                    .joined(separator: "\n") ?? ""
+                text = try OCRHelper.performOCR(on: cgImage)
             } catch {
                 await MainActor.run { [weak self] in
                     self?.errorMessage = L("error.ocrFail")
@@ -191,14 +181,13 @@ class ChatViewModel: ObservableObject {
                 return
             }
 
-            let result = text
             await MainActor.run { [weak self] in
                 guard let self else { return }
-                guard !result.isEmpty else {
+                guard !text.isEmpty else {
                     self.errorMessage = L("error.noText")
                     return
                 }
-                self.sendWithAction(.translate, text: result)
+                self.sendWithAction(.translate, text: text)
             }
         }
     }
@@ -223,8 +212,6 @@ class ChatViewModel: ObservableObject {
     }
 
     private func runLLM(prompt: String, responseIndex idx: Int, provider: LLMProvider) {
-        isLoading = true
-
         let currentModel = model(for: provider)
         let shell = Self.resolveShell(for: provider.binaryName)
 
