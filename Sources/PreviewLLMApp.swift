@@ -1,6 +1,5 @@
 import SwiftUI
 import ApplicationServices
-import Vision
 import ScreenCaptureKit
 
 @main
@@ -121,7 +120,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 }
 
                 let image = try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: config)
-                let text = try performOCR(on: image)
+                let text = try OCRHelper.performOCR(on: image)
 
                 if text.isEmpty {
                     await MainActor.run { completion(.failure(.noText)) }
@@ -146,10 +145,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return nil
         }
         return selectedText as? String
-    }
-
-    private static func performOCR(on image: CGImage) throws -> String {
-        try OCRHelper.performOCR(on: image)
     }
 
     enum OCRError: LocalizedError {
