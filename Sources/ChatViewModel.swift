@@ -218,9 +218,12 @@ class ChatViewModel: ObservableObject {
         let process = Process()
         process.executableURL = URL(fileURLWithPath: shell.path)
         process.environment = shell.env
-        process.arguments = provider.buildArguments(model: currentModel, systemPrompt: systemPrompt)
-
+        var args = provider.buildArguments(model: currentModel, systemPrompt: systemPrompt)
         let formattedPrompt = provider.formatPrompt(prompt, systemPrompt: systemPrompt)
+        if provider.passesPromptViaArgument {
+            args.append(formattedPrompt)
+        }
+        process.arguments = args
 
         let inputPipe = Pipe()
         let outputPipe = Pipe()
@@ -263,7 +266,9 @@ class ChatViewModel: ObservableObject {
         do {
             try process.run()
             currentProcess = process
-            inputPipe.fileHandleForWriting.write(Data(formattedPrompt.utf8))
+            if !provider.passesPromptViaArgument {
+                inputPipe.fileHandleForWriting.write(Data(formattedPrompt.utf8))
+            }
             inputPipe.fileHandleForWriting.closeFile()
         } catch {
             isLoading = false

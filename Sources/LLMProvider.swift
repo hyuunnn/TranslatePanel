@@ -8,8 +8,14 @@ protocol LLMProvider {
     var defaultModel: String { get }
     var binaryName: String { get }
 
+    var passesPromptViaArgument: Bool { get }
+
     func buildArguments(model: String, systemPrompt: String) -> [String]
     func formatPrompt(_ prompt: String, systemPrompt: String) -> String
+}
+
+extension LLMProvider {
+    var passesPromptViaArgument: Bool { false }
 }
 
 // MARK: - Claude
@@ -105,10 +111,34 @@ struct QwenProvider: LLMProvider {
     }
 }
 
+// MARK: - Apfel
+
+struct ApfelProvider: LLMProvider {
+    let id = "apfel"
+    let displayName = "Apfel"
+    let avatarLetter = "A"
+    let avatarColor = Color.red
+    let defaultModel = ""
+    let binaryName = "apfel"
+    let passesPromptViaArgument = true
+
+    func buildArguments(model: String, systemPrompt: String) -> [String] {
+        var args = [String]()
+        let sp = systemPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !sp.isEmpty { args += ["-s", sp] }
+        args += ["--stream", "-o", "plain"]
+        return args
+    }
+
+    func formatPrompt(_ prompt: String, systemPrompt: String) -> String {
+        prompt
+    }
+}
+
 // MARK: - Registry
 
 enum LLMProviderRegistry {
-    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider(), GeminiProvider(), QwenProvider()]
+    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider(), GeminiProvider(), QwenProvider(), ApfelProvider()]
 
     static func provider(forId id: String) -> LLMProvider {
         all.first { $0.id == id } ?? all[0]
