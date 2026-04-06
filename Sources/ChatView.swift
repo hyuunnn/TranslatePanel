@@ -117,7 +117,12 @@ struct ChatView: View {
                         emptyState
                     }
                     ForEach(viewModel.messages) { message in
-                        MessageBubbleView(message: message)
+                        MessageBubbleView(
+                            message: message,
+                            isSpeaking: viewModel.isSpeaking,
+                            onSpeak: { viewModel.speak($0) },
+                            onStopSpeaking: { viewModel.stopSpeaking() }
+                        )
                     }
                     Color.clear.frame(height: 1).id("bottom")
                 }
@@ -264,6 +269,9 @@ struct ChatView: View {
 
 private struct MessageBubbleView: View {
     let message: ChatMessage
+    let isSpeaking: Bool
+    let onSpeak: (String) -> Void
+    let onStopSpeaking: () -> Void
     @State private var copied = false
 
     var body: some View {
@@ -286,22 +294,40 @@ private struct MessageBubbleView: View {
                     )
 
                 if message.role == .assistant && !message.content.isEmpty {
-                    Button(action: {
-                        NSPasteboard.general.clearContents()
-                        NSPasteboard.general.setString(message.content, forType: .string)
-                        copied = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            copied = false
+                    HStack(spacing: 12) {
+                        Button(action: {
+                            NSPasteboard.general.clearContents()
+                            NSPasteboard.general.setString(message.content, forType: .string)
+                            copied = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                copied = false
+                            }
+                        }) {
+                            HStack(spacing: 3) {
+                                Image(systemName: copied ? "checkmark" : "doc.on.doc")
+                                Text(copied ? "Copied" : "Copy")
+                            }
+                            .font(.caption2)
+                            .foregroundColor(copied ? .green : .secondary)
                         }
-                    }) {
-                        HStack(spacing: 3) {
-                            Image(systemName: copied ? "checkmark" : "doc.on.doc")
-                            Text(copied ? "Copied" : "Copy")
+                        .buttonStyle(.borderless)
+
+                        Button(action: {
+                            if isSpeaking {
+                                onStopSpeaking()
+                            } else {
+                                onSpeak(message.content)
+                            }
+                        }) {
+                            HStack(spacing: 3) {
+                                Image(systemName: isSpeaking ? "stop.fill" : "speaker.wave.2")
+                                Text(isSpeaking ? "Stop" : "Speak")
+                            }
+                            .font(.caption2)
+                            .foregroundColor(isSpeaking ? .red : .secondary)
                         }
-                        .font(.caption2)
-                        .foregroundColor(copied ? .green : .secondary)
+                        .buttonStyle(.borderless)
                     }
-                    .buttonStyle(.borderless)
                 }
             }
             .frame(maxWidth: .infinity, alignment: message.role == .user ? .trailing : .leading)

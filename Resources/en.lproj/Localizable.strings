@@ -39,3 +39,6 @@
 "error.cliLaunch" = "Failed to launch CLI";
 "error.invalidImage" = "Cannot open image";
 "drop.imageToTranslate" = "Drop image to OCR and translate";
+
+"settings.speechRate" = "Speech Rate";
+"settings.speechRateDesc" = "Reading speed for say command (words/min)";

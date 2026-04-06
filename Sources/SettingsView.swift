@@ -4,6 +4,7 @@ import ApplicationServices
 struct SettingsView: View {
     @AppStorage("llmProvider") private var providerId = "claude"
     @AppStorage("systemPrompt") private var systemPrompt = ""
+    @AppStorage("speechRate") private var speechRate = 200.0
     @Environment(\.dismiss) private var dismiss
 
     private var currentProvider: LLMProvider {
@@ -94,6 +95,24 @@ struct SettingsView: View {
             }
 
             VStack(alignment: .leading, spacing: 4) {
+                Text(L("settings.speechRate"))
+                    .font(.headline)
+                HStack {
+                    Image(systemName: "tortoise")
+                        .foregroundColor(.secondary)
+                    Slider(value: $speechRate, in: 50...500, step: 10)
+                    Image(systemName: "hare")
+                        .foregroundColor(.secondary)
+                    Text("\(Int(speechRate))")
+                        .font(.callout.monospacedDigit())
+                        .frame(width: 36, alignment: .trailing)
+                }
+                Text(L("settings.speechRateDesc"))
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
                 Text(L("settings.hotkeys"))
                     .font(.headline)
                 VStack(alignment: .leading, spacing: 4) {
@@ -115,6 +134,6 @@ struct SettingsView: View {
             }
         }
         .padding(20)
-        .frame(width: 440, height: 620)
+        .frame(width: 440, height: 700)
     }
 }

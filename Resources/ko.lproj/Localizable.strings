@@ -39,3 +39,6 @@
 "error.cliLaunch" = "CLI 실행 실패";
 "error.invalidImage" = "이미지를 열 수 없습니다";
 "drop.imageToTranslate" = "이미지를 놓으면 OCR 후 번역합니다";
+
+"settings.speechRate" = "음성 속도";
+"settings.speechRateDesc" = "say 명령어의 읽기 속도 (단어/분)";

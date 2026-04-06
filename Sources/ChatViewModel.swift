@@ -19,8 +19,10 @@ class ChatViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String?
     @Published var updateCounter = 0
+    @Published var isSpeaking = false
 
     private var currentProcess: Process?
+    private var sayProcess: Process?
     private var isCancelled = false
     private var observer: Any?
     private var ocrErrorObserver: Any?
@@ -125,7 +127,7 @@ class ChatViewModel: ObservableObject {
             }
             prompt = "<text> 안의 텍스트만 \(langInstruction). 부연설명, 원문 반복, 메모, 태그 없이 번역 결과만 출력해.\n\n<text>\(text)</text>"
         case .summarize: prompt = "<text> 안의 텍스트를 요약만 해. 부연설명 없이 요약 결과만 출력해.\n\n<text>\(text)</text>"
-        case .explain: prompt = "<text> 안의 텍스트를 쉽게 설명해줘:\n\n<text>\(text)</text>"
+        case .explain: prompt = "<text> 안의 텍스트를 쉽게 설명해줘\n\n<text>\(text)</text>"
         }
         let provider = currentProvider
         cancelCurrentRequest()
@@ -145,6 +147,45 @@ class ChatViewModel: ObservableObject {
 
     enum QuickAction {
         case translate, summarize, explain
+    }
+
+    // MARK: - Text-to-Speech
+
+    func speak(_ text: String) {
+        stopSpeaking()
+
+        let rate = Int(UserDefaults.standard.double(forKey: "speechRate").rounded())
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/usr/bin/say")
+        if rate > 0 {
+            process.arguments = ["-r", "\(rate)"]
+        }
+
+        let inputPipe = Pipe()
+        process.standardInput = inputPipe
+
+        process.terminationHandler = { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.isSpeaking = false
+                self?.sayProcess = nil
+            }
+        }
+
+        do {
+            try process.run()
+            sayProcess = process
+            isSpeaking = true
+            inputPipe.fileHandleForWriting.write(Data(text.utf8))
+            inputPipe.fileHandleForWriting.closeFile()
+        } catch {
+            isSpeaking = false
+        }
+    }
+
+    func stopSpeaking() {
+        sayProcess?.terminate()
+        sayProcess = nil
+        isSpeaking = false
     }
 
     // MARK: - Image Drop OCR
