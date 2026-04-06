@@ -23,7 +23,7 @@
 "settings.modelPlaceholder.codex" = "예: gpt-5.4-mini, gpt-5.4, gpt-5.3-codex";
 "settings.modelPlaceholder.gemini" = "예: gemini-2.5-flash, gemini-2.5-pro";
 "settings.modelPlaceholder.qwen" = "예: qwen-plus-latest, qwen-flash-latest";
-"settings.modelPlaceholder.apfel" = "모델 선택 불가";
+"settings.modelPlaceholder.apfel" = "기본 모델";
 "settings.modelDesc" = "CLI에 전달할 모델명을 입력하세요";
 "settings.systemPrompt" = "시스템 프롬프트 (선택)";
 "settings.hotkeys" = "단축키";
