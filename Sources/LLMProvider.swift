@@ -135,10 +135,33 @@ struct ApfelProvider: LLMProvider {
     }
 }
 
+// MARK: - Copilot
+
+struct CopilotProvider: LLMProvider {
+    let id = "copilot"
+    let displayName = "Copilot"
+    let avatarLetter = "P"
+    let avatarColor = Color.gray
+    let defaultModel = "claude-haiku-4.5"
+    let binaryName = "copilot"
+
+    func buildArguments(model: String, systemPrompt: String) -> [String] {
+        var args = ["-s", "--no-custom-instructions", "--output-format", "text"]
+        if !model.isEmpty { args += ["--model", model] }
+        return args
+    }
+
+    func formatPrompt(_ prompt: String, systemPrompt: String) -> String {
+        let sp = systemPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        if sp.isEmpty { return prompt }
+        return "System instructions: \(sp)\n\n\(prompt)"
+    }
+}
+
 // MARK: - Registry
 
 enum LLMProviderRegistry {
-    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider(), GeminiProvider(), QwenProvider(), ApfelProvider()]
+    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider(), GeminiProvider(), QwenProvider(), ApfelProvider(), CopilotProvider()]
 
     static func provider(forId id: String) -> LLMProvider {
         all.first { $0.id == id } ?? all[0]
