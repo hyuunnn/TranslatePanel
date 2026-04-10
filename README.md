@@ -49,7 +49,7 @@ Vibe coded with **Claude Opus 4.6** via [Claude Code](https://github.com/anthrop
   - [Codex CLI](https://github.com/openai/codex) (`codex`)
   - [Gemini CLI](https://github.com/google-gemini/gemini-cli) (`gemini`)
   - [Qwen CLI](https://github.com/QwenLM/qwen-code) (`qwen`)
-  - [Copilot CLI](https://github.com/github/gh-copilot) (`copilot`)
+  - [Copilot CLI](https://github.com/github/copilot-cli) (`copilot`)
   - [Apfel CLI](https://github.com/Arthur-Ficial/apfel) (`apfel`)
 - Swift 5.10+
 

@@ -47,7 +47,7 @@ OCR로 추출한 텍스트는 잘못된 개행, 누락된 글자, 깨진 단어 
   - [Codex CLI](https://github.com/openai/codex) (`codex`)
   - [Gemini CLI](https://github.com/google-gemini/gemini-cli) (`gemini`)
   - [Qwen CLI](https://github.com/QwenLM/qwen-code) (`qwen`)
-  - [Copilot CLI](https://github.com/github/gh-copilot) (`copilot`)
+  - [Copilot CLI](https://github.com/github/copilot-cli) (`copilot`)
   - [Apfel CLI](https://github.com/Arthur-Ficial/apfel) (`apfel`)
 - Swift 5.10+
 
