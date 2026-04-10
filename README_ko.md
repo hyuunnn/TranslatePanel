@@ -1,4 +1,4 @@
-# TranslateLLM
+# TranslatePanel
 
 macOS 화면 어디서든 사용할 수 있는 멀티 LLM 번역 패널입니다.
 
@@ -58,10 +58,10 @@ OCR로 추출한 텍스트는 잘못된 개행, 누락된 글자, 깨진 단어 
 bash build.sh
 
 # 실행
-open build/TranslateLLM.app
+open build/TranslatePanel.app
 
 # 설치 (Applications 폴더로 복사)
-cp -r build/TranslateLLM.app /Applications/
+cp -r build/TranslatePanel.app /Applications/
 ```
 
 ## 권한 설정
@@ -79,5 +79,5 @@ cp -r build/TranslateLLM.app /Applications/
 - 지원되는 LLM CLI 도구 중 하나 이상 설치 필요
 - Claude의 `claude -p` 사용 관련: ([Thariq's Post](https://x.com/trq212/status/2024212380142752025), [archive](images/post.png))
 - 화면 캡처 번역은 macOS의 Live Text와 동일한 Vision OCR 엔진을 사용합니다
-- 화면 캡처 시 TranslateLLM 패널은 자동으로 제외되므로, 패널을 열어놓은 상태에서도 캡처가 가능합니다
+- 화면 캡처 시 TranslatePanel 패널은 자동으로 제외되므로, 패널을 열어놓은 상태에서도 캡처가 가능합니다
 

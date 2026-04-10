@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-APP_NAME="TranslateLLM"
+APP_NAME="TranslatePanel"
 rm -rf .build build
 swift build -c release
 BUILD_DIR=$(swift build -c release --show-bin-path 2>&1 | tail -1)
@@ -13,7 +13,7 @@ mkdir -p "$APP_DIR/Contents/Resources"
 cp "$BUILD_DIR/$APP_NAME" "$APP_DIR/Contents/MacOS/"
 
 # Copy resource bundle for localization
-BUNDLE_RESOURCE=$(find .build -type d -name "TranslateLLM_TranslateLLM.bundle" | head -1)
+BUNDLE_RESOURCE=$(find .build -type d -name "TranslatePanel_TranslatePanel.bundle" | head -1)
 if [ -n "$BUNDLE_RESOURCE" ]; then
     cp -r "$BUNDLE_RESOURCE" "$APP_DIR/Contents/Resources/"
 fi
@@ -24,15 +24,15 @@ cat > "$APP_DIR/Contents/Info.plist" << 'EOF'
 <plist version="1.0">
 <dict>
     <key>CFBundleName</key>
-    <string>TranslateLLM</string>
+    <string>TranslatePanel</string>
     <key>CFBundleIdentifier</key>
-    <string>com.translate.llm</string>
+    <string>com.translate.panel</string>
     <key>CFBundleVersion</key>
     <string>1.0</string>
     <key>CFBundleShortVersionString</key>
     <string>1.0</string>
     <key>CFBundleExecutable</key>
-    <string>TranslateLLM</string>
+    <string>TranslatePanel</string>
     <key>LSUIElement</key>
     <true/>
     <key>LSMinimumSystemVersion</key>

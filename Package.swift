@@ -2,12 +2,12 @@
 import PackageDescription
 
 let package = Package(
-    name: "TranslateLLM",
+    name: "TranslatePanel",
     defaultLocalization: "ko",
     platforms: [.macOS(.v14)],
     targets: [
         .executableTarget(
-            name: "TranslateLLM",
+            name: "TranslatePanel",
             path: ".",
             exclude: ["build", "build.sh", "README.md", "README_ko.md", "images", "Sources/AGENTS.md", "Resources/AGENTS.md"],
             sources: ["Sources"],

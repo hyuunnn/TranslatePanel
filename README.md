@@ -1,4 +1,4 @@
-# TranslateLLM
+# TranslatePanel
 
 A macOS menu-bar LLM translation panel that works anywhere on your screen.
 
@@ -60,10 +60,10 @@ Vibe coded with **Claude Opus 4.6** via [Claude Code](https://github.com/anthrop
 bash build.sh
 
 # Run
-open build/TranslateLLM.app
+open build/TranslatePanel.app
 
 # Install (copy to Applications)
-cp -r build/TranslateLLM.app /Applications/
+cp -r build/TranslatePanel.app /Applications/
 ```
 
 ## Permissions
@@ -81,5 +81,5 @@ Permissions can be requested from the app settings (⚙).
 - Requires at least one supported LLM CLI tool installed
 - Claude's `claude -p` usage context: ([Thariq's Post](https://x.com/trq212/status/2024212380142752025), [archive](images/post.png))
 - Capture translate uses the same Vision OCR engine as macOS Live Text
-- Screen capture automatically excludes the TranslateLLM panel, so it works even while the panel is open
+- Screen capture automatically excludes the TranslatePanel panel, so it works even while the panel is open
 

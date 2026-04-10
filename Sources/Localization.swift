@@ -1,7 +1,7 @@
 import Foundation
 
 private let localBundle: Bundle = {
-    let bundleName = "TranslateLLM_TranslateLLM"
+    let bundleName = "TranslatePanel_TranslatePanel"
     if let url = Bundle.main.resourceURL?.appendingPathComponent(bundleName + ".bundle"),
        let bundle = Bundle(url: url) {
         return bundle
