@@ -278,8 +278,7 @@ class ChatViewModel: ObservableObject {
             guard !data.isEmpty, let str = String(data: data, encoding: .utf8) else { return }
             DispatchQueue.main.async {
                 guard let self, self.messages.indices.contains(idx) else { return }
-                self.messages[idx].content = (self.messages[idx].content + str)
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                self.messages[idx].content += str
                 self.updateCounter += 1
             }
         }
@@ -290,6 +289,10 @@ class ChatViewModel: ObservableObject {
                 guard let self else { return }
                 self.isLoading = false
                 self.currentProcess = nil
+                if self.messages.indices.contains(idx) {
+                    self.messages[idx].content = self.messages[idx].content
+                        .trimmingCharacters(in: .whitespacesAndNewlines)
+                }
                 if proc.terminationStatus != 0,
                    !self.isCancelled,
                    self.messages.indices.contains(idx),
