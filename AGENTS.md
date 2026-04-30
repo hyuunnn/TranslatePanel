@@ -3,7 +3,7 @@
 # TranslatePanel
 
 ## Purpose
-A macOS menu-bar utility that provides LLM-powered translation, summarization, and explanation of OCR-extracted text. It captures screen content or selected text via system-wide hotkeys, runs OCR through Apple Vision, and streams the result to a CLI-based LLM (Claude, Codex, Gemini, Qwen, or Apfel) displayed in a floating panel.
+A macOS menu-bar utility that provides LLM-powered translation, summarization, and explanation of OCR-extracted text. It captures screen content or selected text via system-wide hotkeys, runs OCR through Apple Vision, and streams the result to a CLI-based LLM (Claude, Codex, Gemini, LM Studio, Apfel, or Copilot) displayed in a floating panel.
 
 ## Key Files
 
@@ -29,7 +29,7 @@ A macOS menu-bar utility that provides LLM-powered translation, summarization, a
 ### Working In This Directory
 - This is a Swift Package Manager project. Build with `swift build` or `./build.sh` for a full `.app` bundle.
 - The app runs as `LSUIElement` (no Dock icon) — it lives in the menu bar.
-- No external dependencies beyond Apple frameworks. LLM inference is delegated to CLI tools (`claude`, `codex`, `gemini`, `qwen`, `apfel`) already installed on the user's machine.
+- No external dependencies beyond Apple frameworks. LLM inference is delegated to CLI tools (`claude`, `codex`, `gemini`, `lms`, `apfel`, `copilot`) already installed on the user's machine.
 - Bundle identifier: `com.translate.panel`
 
 ### Build & Run
@@ -71,7 +71,7 @@ swift build                         # debug build only
 - `claude` CLI — Claude Code for LLM inference
 - `codex` CLI — OpenAI Codex for LLM inference
 - `gemini` CLI — Google Gemini for LLM inference
-- `qwen` CLI — Qwen Code for LLM inference
+- `lms` CLI — LM Studio for local LLM inference
 - `apfel` CLI — Apple Intelligence from the command line
 
 <!-- MANUAL: Any manually added notes below this line are preserved on regeneration -->

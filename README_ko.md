@@ -2,7 +2,7 @@
 
 macOS 화면 어디서든 사용할 수 있는 멀티 LLM 번역 패널입니다.
 
-여러 LLM CLI 도구(Claude, Codex, Gemini, Qwen, Apfel, Copilot)를 지원하며, 별도 API 키 없이 기존 CLI 인증을 그대로 사용합니다.
+여러 LLM CLI 도구(Claude, Codex, Gemini, LM Studio, Apfel, Copilot)를 지원하며, 별도 API 키 없이 기존 CLI 인증을 그대로 사용합니다 (LM Studio의 경우 로컬에 로드된 모델을 그대로 사용).
 
 OCR로 추출한 텍스트는 잘못된 개행, 누락된 글자, 깨진 단어 등이 포함되는 경우가 많아 번역기를 사용하면 번역 품질이 떨어집니다. LLM을 사용하면 문맥을 이해하여 자연스러운 번역을 제공합니다.
 
@@ -30,10 +30,11 @@ OCR로 추출한 텍스트는 잘못된 개행, 누락된 글자, 깨진 단어 
 - **영역 캡처 번역 (⌘⇧')** — 드래그로 화면 영역을 선택하고 Vision OCR로 텍스트 추출 후 번역 (화면 기록 권한 필요)
 - **이미지 드롭 번역** — 이미지를 패널에 드래그앤드롭하면 Vision OCR로 텍스트를 추출하고 번역
 - **퀵 액션** — 번역 / 요약 / 설명 버튼
-- **제공자 선택** — 설정에서 Claude, Codex, Gemini, Qwen, Apfel, Copilot 전환 가능
-- **모델 선택** — 자유 입력 방식의 모델명 설정 (제공자별 독립, 예: sonnet, gpt-5.4-mini, gemini-2.5-flash, qwen-flash-latest)
+- **제공자 선택** — 설정에서 Claude, Codex, Gemini, LM Studio, Apfel, Copilot 전환 가능
+- **모델 선택** — 자유 입력 방식의 모델명 설정 (제공자별 독립, 예: sonnet, gpt-5.4-mini, gemini-2.5-flash)
   - Claude와 Codex는 빠른 번역 응답을 위해 reasoning effort를 `low`로 설정
   - Apfel은 Apple Intelligence 기본 모델 사용 (모델 선택 불가)
+  - LM Studio는 LM Studio 앱에 로드되어 있는 모델을 그대로 사용 — 모델 입력란을 비워두거나 `lms ls`에서 확인한 모델 식별자를 입력
 - **음성 읽기 (TTS)** — macOS `say` 명령어로 응답을 소리 내어 읽어줍니다. 속도 조절 가능. 시스템 기본 음성을 사용하며, 음성을 변경하려면 **시스템 설정 > 손쉬운 사용 > 읽기 및 말하기 > 시스템 음성**에서 변경할 수 있습니다
 - **시스템 프롬프트** — 번역 스타일 커스텀 가능 (ex: IT 용어 원문 유지)
 - **다국어 UI** — 시스템 언어에 따라 한국어/영어 자동 전환
@@ -46,7 +47,7 @@ OCR로 추출한 텍스트는 잘못된 개행, 누락된 글자, 깨진 단어 
   - [Claude Code CLI](https://github.com/anthropics/claude-code) (`claude`)
   - [Codex CLI](https://github.com/openai/codex) (`codex`)
   - [Gemini CLI](https://github.com/google-gemini/gemini-cli) (`gemini`)
-  - [Qwen CLI](https://github.com/QwenLM/qwen-code) (`qwen`)
+  - [LM Studio](https://lmstudio.ai/) (`lms` — LM Studio 설치 후 `lms bootstrap`으로 CLI를 활성화하고, 앱에서 모델을 로드)
   - [Copilot CLI](https://github.com/github/copilot-cli) (`copilot`)
   - [Apfel CLI](https://github.com/Arthur-Ficial/apfel) (`apfel`)
 - Swift 5.10+

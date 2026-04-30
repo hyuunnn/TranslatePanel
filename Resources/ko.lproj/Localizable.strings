@@ -22,7 +22,7 @@
 "settings.modelPlaceholder.claude" = "예: sonnet, haiku, opus";
 "settings.modelPlaceholder.codex" = "예: gpt-5.4-mini, gpt-5.4, gpt-5.3-codex";
 "settings.modelPlaceholder.gemini" = "예: gemini-2.5-flash, gemini-2.5-pro";
-"settings.modelPlaceholder.qwen" = "예: qwen-plus-latest, qwen-flash-latest";
+"settings.modelPlaceholder.lmstudio" = "비워두기 — LM Studio 앱에 로드된 모델 사용";
 "settings.modelPlaceholder.apfel" = "기본 모델";
 "settings.modelPlaceholder.copilot" = "예: claude-haiku-4.5, gpt-5.2";
 "settings.modelDesc" = "CLI에 전달할 모델명을 입력하세요";

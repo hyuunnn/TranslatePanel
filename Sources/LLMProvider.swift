@@ -89,22 +89,24 @@ struct GeminiProvider: LLMProvider {
     }
 }
 
-// MARK: - Qwen
+// MARK: - LM Studio
 
-struct QwenProvider: LLMProvider {
-    let id = "qwen"
-    let displayName = "Qwen"
-    let avatarLetter = "Q"
+struct LMStudioProvider: LLMProvider {
+    let id = "lmstudio"
+    let displayName = "LM Studio"
+    let avatarLetter = "L"
     let avatarColor = Color.purple
-    let defaultModel = "qwen-flash-latest"
-    let binaryName = "qwen"
+    let binaryName = "lms"
+    // Empty default — `lms chat` falls back to the currently loaded model.
+    let defaultModel = ""
+    let passesPromptViaArgument = true
 
     func buildArguments(model: String, systemPrompt: String) -> [String] {
-        var args = ["-p", "--output-format", "text"]
-        if !model.isEmpty { args += ["-m", model] }
+        var args = ["chat"]
+        if !model.isEmpty { args.append(model) }
         let sp = systemPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
-        if !sp.isEmpty { args += ["--system-prompt", sp] }
-        args += ["--chat-recording", "false"]
+        if !sp.isEmpty { args += ["-s", sp] }
+        args += ["--dont-fetch-catalog", "-y", "-p"]
         return args
     }
 
@@ -163,7 +165,7 @@ struct CopilotProvider: LLMProvider {
 // MARK: - Registry
 
 enum LLMProviderRegistry {
-    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider(), GeminiProvider(), QwenProvider(), ApfelProvider(), CopilotProvider()]
+    static let all: [LLMProvider] = [ClaudeProvider(), CodexProvider(), GeminiProvider(), LMStudioProvider(), ApfelProvider(), CopilotProvider()]
 
     static func provider(forId id: String) -> LLMProvider {
         all.first { $0.id == id } ?? all[0]
